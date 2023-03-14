@@ -19,11 +19,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -98,8 +94,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Experience updatedExperience = editPersonDescriptor.getExperience().orElse(personToEdit.getExperience());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedExperience);
     }
 
     @Override
@@ -131,6 +128,8 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
 
+        private Experience experience;
+
         public EditPersonDescriptor() {}
 
         /**
@@ -143,6 +142,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setExperience(toCopy.experience);
         }
 
         /**
@@ -199,6 +199,14 @@ public class EditCommand extends Command {
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        public void setExperience(Experience experience) {
+            this.experience = experience;
+        }
+
+        public Optional<Experience> getExperience() {
+            return Optional.ofNullable(experience);
         }
 
         @Override

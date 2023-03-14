@@ -24,16 +24,19 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
+    private final Experience experience;
+
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Experience experience) {
+        requireAllNonNull(name, phone, email, address, tags, experience);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.experience = experience;
     }
 
     public Name getName() {
@@ -50,6 +53,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Experience getExperience() {
+        return experience;
     }
 
     /**
@@ -92,13 +99,14 @@ public class Person {
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
-                && otherPerson.getTags().equals(getTags());
+                && otherPerson.getTags().equals(getTags())
+                && otherPerson.getExperience().equals(getExperience());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, experience);
     }
 
     @Override
@@ -110,7 +118,9 @@ public class Person {
                 .append("; Email: ")
                 .append(getEmail())
                 .append("; Address: ")
-                .append(getAddress());
+                .append(getAddress())
+                .append("; Experience: ")
+                .append(getExperience());
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {
